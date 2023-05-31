@@ -6,11 +6,36 @@ import DSP from '../../img/dsp.jpeg'
 
 [Li et al., (2023)](https://arxiv.org/abs/2302.11520) proposes a new prompting technique to better guide the LLM in generating the desired summary.
 
-A tuneable policy LM is trained to generate the stimulus/hint. Seeing more use of RL to optimize LLMs.
-
+The Large Language Model (LLM) often does not perform well in summarizing articles or multiple rounds of dialogues in specific areas. If you can give LLM some hint keywords based on your understanding of the articles or multiple rounds of dialogues, the quality of LLM summary can be significantly improved.
 The figure below shows how Directional Stimulus Prompting compares with standard prompting. The policy LM can be small and optimized to generate the hints that guide a black-box frozen LLM.
 
 <Screenshot src={DSP} alt="DSP" />
 Image Source: [Li et al., (2023)](https://arxiv.org/abs/2302.11520)
 
-Full example coming soon!
+The Guiding Large Language Models via Directional Stimulus Prompting paper uses tuneable LMs to generate prompt words, helping LLMs generate higher-quality summaries based on prompt words.
+
+In this paper, reinforcement learning is used to train tuneable LMs, which are called policy LMs. The steps are as follows:
+In the summary task of an article or multiple rounds of dialogue, the policy LM is used to generate the prompt keywords of the text to be summarized, and then the text and the generated prompt keywords are input to the LLM for summary, so as to evaluate the quality of the summary provided by the LLM. The policy LM is trained in a reinforcement learning manner based on the feedback result.
+The author validates that his method has obvious effect on the datasets of article summary and multi-round dialogue summary.
+The following is an article in the Huawei scenario. The LLM is used to preliminarily verify the effect of prompt keywords. It can be seen that the article summary provided by chatgpt can better grasp the key points after some improvement keywords are provided based on the understanding of the article.
+
+
+用3句话总结这篇文章：
+文章： 
+挑战一、提升联接人的体验
+走向与虚拟世界的实时交互
+联接人是5G的基本盘，移动通信最初的使命就是让人们随时随地保持联系。面向2030，5G要进一步帮助人们从物理世界的交互走向虚拟世界的交互，不断拓展人类联接的范畴和体验边界，才能满足人类对“天涯若比邻”和“身临其境”等体验要求；
+当前5G VR/AR实现了人与虚拟世界的基本交互，但未来XR Pro、全息需要沉浸式体验，对蜂窝通信的要求将更高，平均接入速率从当前4K的120Mbps提升到未来的16K 2Gbps，交互时延要进一步降低，从目前20ms左右的时延进一步缩短到5ms左右，这都对5G提出进一步的演进需求。
+
+Chatgpt：该文章指出，5G技术的基本任务是提升联接人的体验，未来需要帮助人们从物理世界的交互走向虚拟世界的交互，不断拓展人类联接的范畴和体验边界。当前5G VR/AR已经实现了人与虚拟世界的基本交互，但未来XR Pro、全息需要更高的沉浸式体验，对蜂窝通信的要求将更高，这都对5G提出了进一步的演进需求。
+
+
+根据提示用3句话总结这篇文章。
+提示：交互，速率，延迟
+文章： 
+挑战一、提升联接人的体验
+走向与虚拟世界的实时交互
+联接人是5G的基本盘，移动通信最初的使命就是让人们随时随地保持联系。面向2030，5G要进一步帮助人们从物理世界的交互走向虚拟世界的交互，不断拓展人类联接的范畴和体验边界，才能满足人类对“天涯若比邻”和“身临其境”等体验要求；
+当前5G VR/AR实现了人与虚拟世界的基本交互，但未来XR Pro、全息需要沉浸式体验，对蜂窝通信的要求将更高，平均接入速率从当前4K的120Mbps提升到未来的16K 2Gbps，交互时延要进一步降低，从目前20ms左右的时延进一步缩短到5ms左右，这都对5G提出进一步的演进需求。
+
+Chatgpt: 5G要提升人与虚拟世界的实时交互体验，拓展联接的范畴和体验边界。未来XR Pro、全息需要更高速率和更低延迟的蜂窝通信支持。这对5G提出了进一步的演进需求。
